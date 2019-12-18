@@ -6,8 +6,6 @@
 #include <QDebug>
 #include <QDir>
 
-static const char* LOG_FILE_NAME = "log.txt";
-
 static const string LOG_LEVELS[] {
     "DEBUG",
     "INFO",
@@ -18,6 +16,8 @@ static const string LOG_LEVELS[] {
     "FATAL"
 };
 
+std::string Logger::_logPath = "log.txt";
+bool Logger::_logInFile = false;
 QFile Logger::_logFile;
 std::mutex Logger::_mtx;
 std::atomic<Logger::Level> Logger::_level(Logger::Level::INFO);
@@ -32,8 +32,8 @@ void Logger::init()
 {
     std::lock_guard<std::mutex> lock(_mtx);
     if (!_logFile.isOpen()) {
-        _logFile.setFileName(LOG_FILE_NAME);
-        if (!_logFile.open(QIODevice::WriteOnly))
+        _logFile.setFileName(_logPath.c_str());
+        if (!_logFile.open(QIODevice::WriteOnly | QIODevice::Text))
             qDebug() << "Error";
     }
 }
@@ -43,9 +43,16 @@ Logger::~Logger()
     _logFile.close();
 }
 
-void Logger::setLevel(Logger::Level level)
+void Logger::setLevel(int level)
 {
-    _level = level;
+    qDebug() << "Logger::setLevel";
+    _level = static_cast<Logger::Level>(level);
+}
+
+void Logger::setLogPath(const std::string logPath)
+{
+    qDebug() << "Logger::setLogPath";
+    _logPath = logPath;
 }
 
 QString Logger::logImpl(const QString& line)
@@ -53,8 +60,10 @@ QString Logger::logImpl(const QString& line)
     std::lock_guard<std::mutex> lock(_mtx);
     QString logStr = QDateTime::currentDateTime().toString("dd-MM-yy hh:mm:ss ") + line;
 
-    QTextStream out(&_logFile);
-    out << logStr + "\n";
+    if (_logInFile) {
+        QTextStream out(&_logFile);
+        out << logStr + "\n";
+    }
 
     return logStr;
 }
@@ -70,4 +79,10 @@ const QStringList Logger::getAllLevels()
     for(auto &i : LOG_LEVELS)
         levels.append(QString::fromStdString(i));
     return levels;
+}
+
+void Logger::setLogInFile(bool state)
+{
+    qDebug() << "Logger::setLogInFile";
+    _logInFile = state;
 }

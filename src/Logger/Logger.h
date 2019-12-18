@@ -40,10 +40,15 @@ public:
             emit logging(log);
     }
 
-    void setShowThreadId(bool b);
-    static void setLevel(Level level);
+    void setShowThreadId(bool state);
     static string describeLevel(Level level);
     static const QStringList getAllLevels();
+
+public slots:
+    void setLogInFile(bool state);
+    static void setLevel(int level);
+    static void setLogPath(const std::string logPath);
+
 
 signals:
     void logging(const QString&);
@@ -51,6 +56,8 @@ signals:
 private:
     static void init();
     string _name;
+    static string _logPath;
+    static bool _logInFile;
     static QFile _logFile;
     static std::atomic<Level> _level;
     static std::mutex _mtx;
