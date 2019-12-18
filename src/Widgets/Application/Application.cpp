@@ -8,21 +8,30 @@
 #include <QSplitter>
 #include <QBoxLayout>
 #include <QStyle>
+#include <QDebug>
 
 Application::Application(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Application)
+    , _logger("Application")
+    , _loggerWidget(new LoggerWidget("Logger:", 100, this))
     , _generalTab(new GeneralTab(this))
     , _testingTab(new TestingTab(this))
-    , _loggerWidget(new LoggerWidget("Logger:", 100, this))
     , _settingsTab(new SettingsTab(this))
-    , _logger("Application")
 {
     ui->setupUi(this);
     setWindowTitle("Badsurf");
     QObject::connect(&_logger, &Logger::logging, _loggerWidget, &LoggerWidget::log);
-    _logger.setLevel(Logger::TRACE);
+    QObject::connect(_settingsTab, &SettingsTab::enabledLogInFile, &_logger, &Logger::setLogInFile);
+    QObject::connect(_settingsTab, &SettingsTab::logPathChanged, &_logger, &Logger::setLogPath);
+    QObject::connect(_settingsTab, &SettingsTab::levelChanged, &_logger, &Logger::setLevel);
+
+    _logger.setLogInFile(_settingsTab->settings()->value("/enableLogging").toBool());
+    _logger.setLogPath(_settingsTab->settings()->value("/logPath").toString().toStdString());
+    _logger.setLevel(_settingsTab->settings()->value("/logLevel").toInt());
+
     LOG_TRACE(_logger)
+
 
 
     QTabWidget *tabWidget = new QTabWidget(this);

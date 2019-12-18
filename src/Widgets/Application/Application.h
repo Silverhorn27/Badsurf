@@ -25,11 +25,11 @@ public:
 
 private:
     Ui::Application *ui;
+    Logger _logger;
+    LoggerWidget *_loggerWidget;
     GeneralTab *_generalTab;
     TestingTab *_testingTab;
-    LoggerWidget *_loggerWidget;
     SettingsTab *_settingsTab;
-    Logger _logger;
 };
 
 #endif // APPLICATION_H
