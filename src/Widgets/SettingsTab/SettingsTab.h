@@ -14,9 +14,7 @@ class SettingsTab : public QWidget
 
 public:
     explicit SettingsTab(QWidget *parent = nullptr);
-    void setDefaultSettings();
     void setSettings();
-    void setSettings(const QSettings &settings);
     QSettings *settings();
     ~SettingsTab();
 
@@ -32,6 +30,12 @@ private slots:
     void on_defaultButton_clicked();
 
     void on_selectConfigButton_clicked();
+
+signals:
+    void enabledLogInFile(bool);
+    void enabledShowEDr(bool);
+    void logPathChanged(const std::string &);
+    void levelChanged(int);
 
 private:
     Ui::SettingsTab *ui;
