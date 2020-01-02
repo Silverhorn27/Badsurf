@@ -20,16 +20,12 @@ public:
 
 private slots:
     void on_applyButton_clicked();
-
     void on_resetConfigButton_clicked();
-
     void on_resetLogButton_clicked();
-
     void on_cancelButton_clicked();
-
     void on_defaultButton_clicked();
-
     void on_selectConfigButton_clicked();
+    void on_selectLogButton_clicked();
 
 signals:
     void enabledLogInFile(bool);

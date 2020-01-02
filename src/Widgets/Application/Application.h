@@ -6,10 +6,11 @@
 #include <QSettings>
 #include "Logger/Logger.h"
 
-class TestingTab;
-class LoggerWidget;
 class GeneralTab;
+class SmartTab;
+class TestingTab;
 class SettingsTab;
+class LoggerWidget;
 
 namespace Ui {
 class Application;
@@ -28,6 +29,7 @@ private:
     Logger _logger;
     LoggerWidget *_loggerWidget;
     GeneralTab *_generalTab;
+    SmartTab *_smartTab;
     TestingTab *_testingTab;
     SettingsTab *_settingsTab;
 };

@@ -11,13 +11,13 @@ using std::string;
 class StringUtils
 {
 public:
-    static string toString()
+    static decltype (auto) toString()
     {
         return string();
     }
 
     template<typename T>
-    static string toString(const T& value)
+    static decltype (auto) toString(const T& value)
     {
         std::stringstream ss;
         ss << value;

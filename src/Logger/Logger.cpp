@@ -5,8 +5,9 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
+#include <array>
 
-static const string LOG_LEVELS[] {
+static const std::array<string, 7> LOG_LEVELS {
     "DEBUG",
     "INFO",
     "DONE",
@@ -17,13 +18,13 @@ static const string LOG_LEVELS[] {
 };
 
 std::string Logger::_logPath = "log.txt";
-bool Logger::_logInFile = false;
+bool Logger::_logInFile = true;
 QFile Logger::_logFile;
 std::mutex Logger::_mtx;
 std::atomic<Logger::Level> Logger::_level(Logger::Level::INFO);
 
-Logger::Logger(const string &name)
-    : _name(name)
+Logger::Logger(string name)
+    : _name(std::move(name))
 {
     init();
 }
@@ -45,13 +46,11 @@ Logger::~Logger()
 
 void Logger::setLevel(int level)
 {
-    qDebug() << "Logger::setLevel";
     _level = static_cast<Logger::Level>(level);
 }
 
-void Logger::setLogPath(const std::string logPath)
+void Logger::setLogPath(const std::string &logPath)
 {
-    qDebug() << "Logger::setLogPath";
     _logPath = logPath;
 }
 
@@ -70,7 +69,7 @@ QString Logger::logImpl(const QString& line)
 
 string Logger::describeLevel(Logger::Level level)
 {
-    return LOG_LEVELS[level];
+    return LOG_LEVELS.at(static_cast<size_t>(level));
 }
 
 const QStringList Logger::getAllLevels()
@@ -83,6 +82,5 @@ const QStringList Logger::getAllLevels()
 
 void Logger::setLogInFile(bool state)
 {
-    qDebug() << "Logger::setLogInFile";
     _logInFile = state;
 }

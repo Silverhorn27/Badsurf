@@ -18,7 +18,7 @@ class Logger : public QObject
 {
     Q_OBJECT
 public:
-    Logger(const string& name);
+    Logger(string name);
     ~Logger();
 
     enum Level : int {
@@ -45,9 +45,9 @@ public:
     static const QStringList getAllLevels();
 
 public slots:
-    void setLogInFile(bool state);
+    static void setLogInFile(bool state);
     static void setLevel(int level);
-    static void setLogPath(const std::string logPath);
+    static void setLogPath(const std::string &logPath);
 
 
 signals:

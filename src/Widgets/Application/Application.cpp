@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ui_Application.h"
 #include "Widgets/GeneralTab/GeneralTab.h"
+#include "Widgets/SmartTab/SmartTab.h"
 #include "Widgets/TestingTab/TestingTab.h"
 #include "Widgets/LoggerWidget/LoggerWidget.h"
 #include "Widgets/SettingsTab/SettingsTab.h"
@@ -16,6 +17,7 @@ Application::Application(QWidget *parent)
     , _logger("Application")
     , _loggerWidget(new LoggerWidget("Logger:", 100, this))
     , _generalTab(new GeneralTab(this))
+    , _smartTab(new SmartTab(this))
     , _testingTab(new TestingTab(this))
     , _settingsTab(new SettingsTab(this))
 {
@@ -32,12 +34,11 @@ Application::Application(QWidget *parent)
 
     LOG_TRACE(_logger)
 
-
-
     QTabWidget *tabWidget = new QTabWidget(this);
     tabWidget->insertTab(0, _generalTab, "General");
-    tabWidget->insertTab(1, _testingTab, "Test");
-    tabWidget->insertTab(2, _settingsTab, "Settings");
+    tabWidget->insertTab(1, _smartTab, "S.M.A.R.T");
+    tabWidget->insertTab(2, _testingTab, "Test");
+    tabWidget->insertTab(3, _settingsTab, "Settings");
 
     ui->verticalLayout->addWidget(tabWidget);
     ui->verticalLayout->addWidget(_loggerWidget);

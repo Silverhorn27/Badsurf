@@ -25,6 +25,9 @@ SOURCES += \
     src/Widgets/GeneralTab/GeneralTab.cpp \
     src/Widgets/LoggerWidget/LoggerWidget.cpp \
     src/Widgets/SettingsTab/SettingsTab.cpp \
+    src/Widgets/SmartTab/SmartTab.cpp \
+    src/Widgets/SmartTab/TableModel.cpp \
+    src/Widgets/TestingTab/Test.cpp \
     src/Widgets/TestingTab/TestingTab.cpp \
     src/main.cpp
 
@@ -36,6 +39,9 @@ HEADERS += \
     src/Widgets/GeneralTab/GeneralTab.h \
     src/Widgets/LoggerWidget/LoggerWidget.h \
     src/Widgets/SettingsTab/SettingsTab.h \
+    src/Widgets/SmartTab/SmartTab.h \
+    src/Widgets/SmartTab/TableModel.h \
+    src/Widgets/TestingTab/Test.h \
     src/Widgets/TestingTab/TestingTab.h
 
 
@@ -44,9 +50,13 @@ FORMS += \
     src/Widgets/GeneralTab/GeneralTab.ui \
     src/Widgets/LoggerWidget/LoggerWidget.ui \
     src/Widgets/SettingsTab/SettingsTab.ui \
+    src/Widgets/SmartTab/SmartTab.ui \
     src/Widgets/TestingTab/TestingTab.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icons.qrc

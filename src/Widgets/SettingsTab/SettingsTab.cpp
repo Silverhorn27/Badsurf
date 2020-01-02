@@ -118,3 +118,12 @@ void SettingsTab::on_selectConfigButton_clicked()
         ui->configLineEdit->setText(fileName);
     }
 }
+
+void SettingsTab::on_selectLogButton_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Select log file");
+
+    if (fileName != "") {
+        ui->logLineEdit->setText(fileName);
+    }
+}
