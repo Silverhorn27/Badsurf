@@ -6,13 +6,10 @@
 #define N_TESTS 1
 
 const Test TESTS[] = {
-    // {"string", string_test},
-    // {"vector", vector_test},
-    // {"list", list_test},
-    {"result", result_test},
+    {"badsurf", badsurf_test}
 };
 
-int main(void)
+int main()
 {
     printf("[!] Found %d tests\n", N_TESTS);
     for (int i = 0; i < N_TESTS; i++) {

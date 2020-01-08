@@ -290,8 +290,10 @@ int dc_dev_ata_identify(char *dev_fs_path, byte identify[]) {
 #endif
     ioctl_ret = ioctl(fd, SG_IO, &scsi_command);
     close(fd);
-    if (ioctl_ret)
+    if (ioctl_ret) {
+        perror("ioctl");
         return -1;
+    }
 
     // Parse response
     ScsiAtaReturnDescriptor scsi_ata_ret;

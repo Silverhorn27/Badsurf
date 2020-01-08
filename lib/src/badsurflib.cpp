@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <cassert>
-#include <ctype.h>
+#include <cctype>
 #include <cstdio>
 #include <cstring>
 #include <ctime>
@@ -109,15 +109,21 @@ static void dev_list_build(DC_DevList *dc_devlist) {
 
     auto found_devs = enu.get();
     for (auto &d : found_devs) {
+        if (d.property("ID_TYPE") != "disk" || d.property("DEVTYPE") == "partition") {
+            continue;
+        }
+
         DC_Dev *dc_dev = (DC_Dev*)calloc(1, sizeof(*dc_dev));
         assert(dc_dev);
-        dc_dev->node_path = d.node().c_str();
-        dc_dev->model_str = d.property("ID_MODEL").c_str();
+        dc_dev->node_path = strdup(d.node().c_str());
+        dc_dev->model_str = strdup(d.property("ID_MODEL").c_str());
 
-        dc_dev->security_on =
-            (*(d.property("ID_ATA_FEATURE_SET_SECURITY_ENABLED").c_str()) == '1');
-        dc_dev->hpa_enabled =
-            (*(d.property("ID_ATA_FEATURE_SET_HPA_ENABLED").c_str()) == '1');
+        if (d.property("ID_ATA") == "1") {
+            dc_dev->security_on =
+                (*(d.property("ID_ATA_FEATURE_SET_SECURITY_ENABLED").c_str()) == '1');
+            dc_dev->hpa_enabled =
+                (*(d.property("ID_ATA_FEATURE_SET_HPA_ENABLED").c_str()) == '1');
+        }
 
         dc_dev->next = dc_devlist->arr;
         dc_devlist->arr = dc_dev;

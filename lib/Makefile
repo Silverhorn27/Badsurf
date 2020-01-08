@@ -29,4 +29,4 @@ src/%.o : src/%.cpp
 	$(CC) $(CFLAGS) -c $? -o $@
 
 clean:
-	rm $(OBJS) $(LIB)
+	rm -rf $(OBJS) $(LIB)

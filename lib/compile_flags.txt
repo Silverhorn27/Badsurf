@@ -1,2 +1,2 @@
-g++ -Wall -Wextra -Wpedantic -Werror -std=c++14
+g++ -Wall -Wextra -Wpedantic -Werror -std=c++2a
 -I./include
