@@ -50,7 +50,7 @@ LoggerWidget::LoggerWidget(const QString & title, const int animationDuration,
 
     const auto collapsedHeight = sizeHint().height() - ui->contentArea->maximumHeight();
     auto contentHeight = _logEdit->sizeHint().height() - 68;
-//    qDebug() << _logEdit->sizeHint().height() << "   " << sizeHint().height() << "  " << ui->contentArea->maximumHeight();
+
     for (int i = 0; i < _toggleAnimation.animationCount() - 1; ++i) {
         QPropertyAnimation * spoilerAnimation = static_cast<QPropertyAnimation *>(_toggleAnimation.animationAt(i));
         spoilerAnimation->setDuration(_animationDuration);

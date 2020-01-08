@@ -30,7 +30,7 @@
       <widget class="QComboBox" name="comboBox">
        <property name="minimumSize">
         <size>
-         <width>200</width>
+         <width>300</width>
          <height>0</height>
         </size>
        </property>
@@ -49,10 +49,17 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Get information</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QTextEdit" name="textEdit"/>
+    <widget class="QTableWidget" name="tableWidget"/>
    </item>
   </layout>
  </widget>

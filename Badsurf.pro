@@ -26,7 +26,6 @@ SOURCES += \
     src/Widgets/LoggerWidget/LoggerWidget.cpp \
     src/Widgets/SettingsTab/SettingsTab.cpp \
     src/Widgets/SmartTab/SmartTab.cpp \
-    src/Widgets/SmartTab/TableModel.cpp \
     src/Widgets/TestingTab/Test.cpp \
     src/Widgets/TestingTab/TestingTab.cpp \
     src/main.cpp
@@ -40,7 +39,6 @@ HEADERS += \
     src/Widgets/LoggerWidget/LoggerWidget.h \
     src/Widgets/SettingsTab/SettingsTab.h \
     src/Widgets/SmartTab/SmartTab.h \
-    src/Widgets/SmartTab/TableModel.h \
     src/Widgets/TestingTab/Test.h \
     src/Widgets/TestingTab/TestingTab.h
 
@@ -58,5 +56,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES += \
-    icons.qrc
+unix:!macx: LIBS += -L$$PWD/lib/ -lbadsurf
+
+INCLUDEPATH += $$PWD/lib/include
+DEPENDPATH += $$PWD/lib/include

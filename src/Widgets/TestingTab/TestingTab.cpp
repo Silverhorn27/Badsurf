@@ -37,6 +37,9 @@ void TestingTab::resetAll()
     ui->t500label->setText("0");
     ui->t500olabel->setText("0");
     ui->startLine->setText("0");
+    _x = 0;
+    _y = 0;
+    ui->graphicsView->verticalScrollBar()->setValue(_y);
 }
 
 void TestingTab::paintStatusBlocks()
@@ -105,6 +108,7 @@ void TestingTab::on_pauseButton_clicked()
         emit on_stop();
     } else {
         ui->pauseButton->setText("Pause");
+//        ui->graphicsView->verticalScrollBar()->setValue(_y);
         readSectors();
     }
 }
@@ -136,12 +140,12 @@ void TestingTab::stopShowResult()
 
 void TestingTab::addRect(DiskBlockAccess status)
 {
-    if (_y > 480) {
-        _scene.clear();
-        _x = 0;
-        _y = 0;
-        ui->graphicsView->verticalScrollBar()->setValue(_y);
-    }
+//    if (_y > 480) {
+////        _scene.clear();
+//        _x = 0;
+//        _y = 0;
+//        ui->graphicsView->verticalScrollBar()->setValue(_y);
+//    }
 
     if (status % 2 == 0) {
         _scene.addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(Qt::black));

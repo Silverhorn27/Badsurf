@@ -17,6 +17,9 @@
    <property name="verticalSpacing">
     <number>6</number>
    </property>
+   <item row="1" column="0">
+    <widget class="QTableWidget" name="tableWidget"/>
+   </item>
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -40,9 +43,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QTableView" name="tableView"/>
    </item>
   </layout>
  </widget>

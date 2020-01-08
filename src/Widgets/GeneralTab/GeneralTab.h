@@ -2,6 +2,7 @@
 #define GENERALTAB_H
 
 #include <QWidget>
+#include "Logger/Logger.h"
 
 namespace Ui {
 class GeneralTab;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::GeneralTab *ui;
+    Logger _logger;
 };
 
 #endif // GENERALTAB_H
