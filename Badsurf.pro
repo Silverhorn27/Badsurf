@@ -36,7 +36,6 @@ HEADERS += \
     src/Utils/StringUtils.h \
     src/Widgets/Application/Application.h \
     src/Widgets/GeneralTab/GeneralTab.h \
-    src/Widgets/GeneralTab/HeaderModel.h \
     src/Widgets/LoggerWidget/LoggerWidget.h \
     src/Widgets/SettingsTab/SettingsTab.h \
     src/Widgets/SmartTab/SmartTab.h \

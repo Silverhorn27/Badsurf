@@ -5,6 +5,9 @@
 #include <QTabWidget>
 #include <QSettings>
 #include "Logger/Logger.h"
+#include <badsurflib/objects_def.hpp>
+#include <badsurflib/badsurflib.hpp>
+#include <badsurflib/device.hpp>
 
 class GeneralTab;
 class SmartTab;
@@ -24,6 +27,9 @@ public:
     explicit Application(QWidget *parent = nullptr);
     ~Application();
 
+public slots:
+    void currentDevChanged(DC_Dev *dev);
+
 private:
     Ui::Application *ui;
     Logger _logger;
@@ -32,6 +38,7 @@ private:
     SmartTab *_smartTab;
     TestingTab *_testingTab;
     SettingsTab *_settingsTab;
+    DC_Dev *_currentDev;
 };
 
 #endif // APPLICATION_H

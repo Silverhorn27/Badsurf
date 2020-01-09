@@ -19,9 +19,13 @@ public:
     ~GeneralTab();
 
     void init();
+    DC_Dev *currentDev();
 
 private slots:
     void on_pushButton_clicked();
+
+signals:
+    void devChanged(DC_Dev *);
 
 private:
     Ui::GeneralTab *ui;

@@ -23,6 +23,8 @@ GeneralTab::GeneralTab(QWidget *parent)
     ui->setupUi(this);
     LOG_TRACE(_logger)
     init();
+    qRegisterMetaType<DC_Dev*>("DC_Dev*");
+
     ui->tableWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->tableWidget->verticalHeader()->hide();
@@ -68,7 +70,13 @@ void GeneralTab::init()
             _currentDev = cur;
             cur = cur->next;
         }
+        emit devChanged(_currentDev);
     });
+}
+
+DC_Dev *GeneralTab::currentDev()
+{
+    return _currentDev;
 }
 
 void GeneralTab::on_pushButton_clicked()

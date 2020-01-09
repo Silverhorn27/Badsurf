@@ -13,7 +13,7 @@ TestingTab::TestingTab(QWidget *parent)
     , _stopShow(false)
 {
     ui->setupUi(this);
-    ui->graphicsView->setScene(&_scene);
+    ui->graphicsView->setScene(new QGraphicsScene(ui->graphicsView));
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -37,9 +37,10 @@ void TestingTab::resetAll()
     ui->t500label->setText("0");
     ui->t500olabel->setText("0");
     ui->startLine->setText("0");
+    delete ui->graphicsView->scene();
+    ui->graphicsView->setScene(new QGraphicsScene(ui->graphicsView));
     _x = 0;
     _y = 0;
-    ui->graphicsView->verticalScrollBar()->setValue(_y);
 }
 
 void TestingTab::paintStatusBlocks()
@@ -83,6 +84,11 @@ TestingTab::~TestingTab()
     delete ui;
 }
 
+void TestingTab::setCurrentDev(DC_Dev *dev)
+{
+    _currentDev = dev;
+}
+
 void TestingTab::on_startButton_clicked()
 {
     if (ui->startButton->text() == "Start") {
@@ -95,9 +101,6 @@ void TestingTab::on_startButton_clicked()
         ui->pauseButton->setText("Pause");
         ui->pauseButton->setEnabled(false);
         resetAll();
-        _scene.clear();
-        _x = 0;
-        _y = 0;
     }
 }
 
@@ -108,7 +111,6 @@ void TestingTab::on_pauseButton_clicked()
         emit on_stop();
     } else {
         ui->pauseButton->setText("Pause");
-//        ui->graphicsView->verticalScrollBar()->setValue(_y);
         readSectors();
     }
 }
@@ -140,17 +142,10 @@ void TestingTab::stopShowResult()
 
 void TestingTab::addRect(DiskBlockAccess status)
 {
-//    if (_y > 480) {
-////        _scene.clear();
-//        _x = 0;
-//        _y = 0;
-//        ui->graphicsView->verticalScrollBar()->setValue(_y);
-//    }
-
     if (status % 2 == 0) {
-        _scene.addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(Qt::black));
+        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(Qt::black));
     } else
-        _scene.addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(Qt::gray));
+        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(Qt::gray));
     _x += 20;
     if (_y > 360)
         ui->graphicsView->verticalScrollBar()->setValue(_y);

@@ -6,7 +6,9 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QGraphicsScene>
 #include "Test.h"
-
+#include <badsurflib/objects_def.hpp>
+#include <badsurflib/badsurflib.hpp>
+#include <badsurflib/device.hpp>
 
 class Testing;
 
@@ -25,6 +27,8 @@ public:
     void readSectors();
     ~TestingTab();
 
+    void setCurrentDev(DC_Dev *dev);
+
 private slots:
     void on_startButton_clicked();
     void on_pauseButton_clicked();
@@ -40,7 +44,7 @@ signals:
 
 private:
     Ui::TestingTab *ui;
-    QGraphicsScene _scene;
+    DC_Dev *_currentDev;
     Test _test;
     bool _stopShow;
     std::array<uint32_t, 13> _sectorsCounter;

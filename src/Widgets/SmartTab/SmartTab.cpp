@@ -35,3 +35,8 @@ SmartTab::~SmartTab()
 {
     delete ui;
 }
+
+void SmartTab::setCurrentDev(DC_Dev *dev)
+{
+    _currentDev = dev;
+}

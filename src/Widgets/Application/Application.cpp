@@ -20,9 +20,12 @@ Application::Application(QWidget *parent)
     , _smartTab(new SmartTab(this))
     , _testingTab(new TestingTab(this))
     , _settingsTab(new SettingsTab(this))
+    , _currentDev(nullptr)
 {
     ui->setupUi(this);
     setWindowTitle("Badsurf");
+
+    QObject::connect(_generalTab, &GeneralTab::devChanged, this, &Application::currentDevChanged);
     QObject::connect(&_logger, &Logger::logging, _loggerWidget, &LoggerWidget::log);
     QObject::connect(_settingsTab, &SettingsTab::enabledLogInFile, &_logger, &Logger::setLogInFile);
     QObject::connect(_settingsTab, &SettingsTab::logPathChanged, &_logger, &Logger::setLogPath);
@@ -31,6 +34,8 @@ Application::Application(QWidget *parent)
     _logger.setLogInFile(_settingsTab->settings()->value("/enableLogging").toBool());
     _logger.setLogPath(_settingsTab->settings()->value("/logPath").toString().toStdString());
     _logger.setLevel(_settingsTab->settings()->value("/logLevel").toInt());
+    _currentDev = _generalTab->currentDev();
+    currentDevChanged(_currentDev);
 
     LOG_TRACE(_logger)
 
@@ -48,3 +53,10 @@ Application::~Application()
 {
     delete ui;
 }
+
+void Application::currentDevChanged(DC_Dev *dev)
+{
+    _smartTab->setCurrentDev(dev);
+    _testingTab->setCurrentDev(dev);
+}
+
