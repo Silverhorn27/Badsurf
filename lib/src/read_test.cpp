@@ -170,11 +170,12 @@ static int Perform(DC_ProcedureCtx *ctx) {
 static void Close(DC_ProcedureCtx *ctx) {
     ReadPriv *priv = (ReadPriv*)ctx->priv;
     int r = ioctl(priv->fd, BLKRASET, priv->old_readahead);
-    if (r == -1)
+    if (r == -1) {
         // do warn
-      // dc_log(DC_LOG_WARNING, "Restoring block device readahead setting failed\n");
-    free(priv->buf);
-    close(priv->fd);
+        free(priv->buf);
+        close(priv->fd);
+    }
+  // dc_log(DC_LOG_WARNING, "Restoring block device readahead setting failed\n");
 }
 
 static DC_ProcedureOption options[] = {
