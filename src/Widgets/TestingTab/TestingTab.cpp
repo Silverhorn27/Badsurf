@@ -87,10 +87,13 @@ TestingTab::~TestingTab()
 void TestingTab::setCurrentDev(DC_Dev *dev)
 {
     _currentDev = dev;
+    ui->endLine->setText(QString::number(dev->capacity));
 }
 
 void TestingTab::on_startButton_clicked()
 {
+    if (ui->endLine->text() == "0")
+        return;
     if (ui->startButton->text() == "Start") {
         ui->startButton->setText("Stop");
         ui->pauseButton->setEnabled(true);
