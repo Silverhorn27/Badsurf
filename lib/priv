@@ -1,0 +1,297 @@
+compile_flags.txt:g++ -Wall -Wextra -Wpedantic -Werror -std=c++2a
+compile_flags.txt:-I./include
+Makefile:LDFLAGS=-ludev -lpthread
+Makefile:INCUDES := -I./include
+Makefile:CFLAGS += -Wall -Wextra -Wpedantic -std=gnu++2a -g -fPIC $(INCUDES) $(LDFLAGS)
+Makefile:	$(CC) $(LDFLAGS) $^ -shared -o $@
+Makefile:	$(CC) $(CFLAGS) -c $? -o $@
+Makefile:	rm -rf $(OBJS) $(LIB)
+src/utils.cpp:    assert(r != -1);
+src/utils.cpp:    if (r == -1)
+src/utils.cpp:    char *p = &retbuf[bufsize-1];
+src/utils.cpp:            *--p = comma;
+src/utils.cpp:        *--p = '0' + n % 10;
+src/utils.cpp:    while (!actctx->finished) {
+src/utils.cpp:            actctx->interrupt = 1;
+src/utils.cpp:    if (fd == -1)
+src/utils.cpp:        return -1;
+src/utils.cpp:        return -1;
+src/utils.cpp:    (*max_lba)--;
+src/utils.cpp:    return dc_dev_set_max_lba(dev_fs_path, capacity / 512 - 1);
+src/utils.cpp:    if (fd == -1)
+src/utils.cpp:        return -1;
+src/utils.cpp:        return -1;
+src/utils.cpp:    if (fd == -1)
+src/utils.cpp:        return -1;
+src/utils.cpp:        return -1;
+src/utils.cpp:        return -1;
+src/utils.cpp:    /* find first non-space & print it */
+src/utils.cpp:        dst--;
+src/hpa_set.cpp:    if (!strcmp(setting->name, "max_lba")) {
+src/hpa_set.cpp:        int64_t native_max_lba = dev->native_capacity / 512 - 1;  // TODO Request via ATA
+src/hpa_set.cpp:        assert(r != -1);
+src/hpa_set.cpp:        setting->value = str;
+src/hpa_set.cpp:    HpaSetPriv *priv = (HpaSetPriv*)ctx->priv;
+src/hpa_set.cpp:    dc_dev_set_max_lba((char*)ctx->dev->node_path, ctx->dev->native_capacity / 512 - 1);
+src/hpa_set.cpp:    int ret = dc_dev_set_max_lba((char*)ctx->dev->node_path, priv->max_lba);
+src/procedure.cpp:    procedure->next = dc_ctx_global->procedure_list;
+src/procedure.cpp:    dc_ctx_global->procedure_list = procedure;
+src/procedure.cpp:    while (procedure->options && procedure->options[options_num].name)
+src/procedure.cpp:    procedure->options_num = options_num;
+src/procedure.cpp:    dc_ctx_global->nb_procedures++;
+src/procedure.cpp:    DC_Procedure *iter = dc_ctx_global->procedure_list;
+src/procedure.cpp:        if (!strcmp(iter->name, name))
+src/procedure.cpp:        iter = iter->next;
+src/procedure.cpp:    return dc_ctx_global->nb_procedures;
+src/procedure.cpp:    return prev ? prev->next : dc_ctx_global->procedure_list;
+src/procedure.cpp:    DC_Procedure *entry = dc_ctx_global->procedure_list;
+src/procedure.cpp:        entry = entry->next;
+src/procedure.cpp:    ctx->priv = calloc(1, procedure->priv_data_size);
+src/procedure.cpp:    if (!ctx->priv)
+src/procedure.cpp:    for (i = 0; procedure->options && procedure->options[i].name; i++) {
+src/procedure.cpp:        DC_ProcedureOption *opt = &procedure->options[i];
+src/procedure.cpp:        setting.name = opt->name;
+src/procedure.cpp:        procedure->suggest_default_value(dev, &setting);
+src/procedure.cpp:        switch (opt->type) {
+src/procedure.cpp:                ret = sscanf(setting.value, "%ld", (int64_t*)((uint8_t*)ctx->priv + opt->offset));
+src/procedure.cpp:                *(const char**)((uint8_t*)ctx->priv + opt->offset) = setting.value;
+src/procedure.cpp:            for (i = 0; procedure->options[i].name; i++) {
+src/procedure.cpp:                DC_ProcedureOption *opt = &procedure->options[i];
+src/procedure.cpp:                // fprintf(stderr, "looking at argument '%s' and defined option '%s'\n", options[arg_i].name, opt->name);
+src/procedure.cpp:                if (strcmp(options[arg_i].name, opt->name))
+src/procedure.cpp:                switch (opt->type) {
+src/procedure.cpp:                        ret = sscanf(options[arg_i].value, "%ld", (int64_t*)((uint8_t*)ctx->priv + opt->offset));
+src/procedure.cpp:                        *(const char**)((uint8_t*)ctx->priv + opt->offset) = strdup(options[arg_i].value);
+src/procedure.cpp:    ctx->dev = dev;
+src/procedure.cpp:    ctx->procedure = procedure;
+src/procedure.cpp:    return procedure->open(ctx);
+src/procedure.cpp:    ctx->procedure->close(ctx);
+src/procedure.cpp:    free(ctx->priv);
+src/procedure.cpp:    while (!ctx->interrupt) {
+src/procedure.cpp:        if (ctx->progress.num >= ctx->progress.den)
+src/procedure.cpp:        perform_ret = ctx->procedure->perform(ctx);
+src/procedure.cpp:    ctx->finished = 1;
+src/procedure.cpp:    dc_procedure_perform_loop(args->ctx, args->callback, args->callback_priv);
+src/procedure.cpp:    args->ctx = ctx;
+src/procedure.cpp:    args->callback = callback;
+src/procedure.cpp:    args->callback_priv = callback_priv;
+src/procedure.cpp:    int r = clock_gettime(DC_BEST_CLOCK, &ctx->time_pre);
+src/procedure.cpp:    int r = clock_gettime(DC_BEST_CLOCK, &ctx->time_post);
+src/procedure.cpp:    ctx->report.blk_access_time = (ctx->time_post.tv_sec - ctx->time_pre.tv_sec) * 1000000 +
+src/procedure.cpp:        (ctx->time_post.tv_nsec - ctx->time_pre.tv_nsec) / 1000;
+src/smart_show.cpp:    char *text = dc_dev_smartctl_text((char*)ctx->dev->node_path, " -A -f brief ");
+src/smart_show.cpp:        (SmartShowPriv*)(ctx->priv)->v_attrs = attrs;
+src/smart_show.cpp:        (SmartShowPriv*)(ctx->priv)->n_attrs = n_attrs;
+src/ata.cpp:    task_struct_t *io_ports = (task_struct_t*)&cmd_buffer->task.io_ports;
+src/ata.cpp:    hob_struct_t *hob_ports = (hob_struct_t*)&cmd_buffer->task.hob_ports;
+src/ata.cpp:    memset(&cmd_buffer->task, 0, sizeof(cmd_buffer->task));
+src/ata.cpp:    io_ports->command = cmd;
+src/ata.cpp:    io_ports->sector_count   = size_in_sectors & 0x00ff;
+src/ata.cpp:    hob_ports->sector_count  = (size_in_sectors >> 8) & 0x00ff;
+src/ata.cpp:    io_ports->sector_number  = lba_be_bytes[7];  // LBA (7:0)
+src/ata.cpp:    io_ports->low_cylinder   = lba_be_bytes[6];  // LBA (15:8)
+src/ata.cpp:    io_ports->high_cylinder  = lba_be_bytes[5];  // LBA (23:16)
+src/ata.cpp:    hob_ports->sector_number = lba_be_bytes[4];  // LBA (31:24)
+src/ata.cpp:    hob_ports->low_cylinder  = lba_be_bytes[3];  // LBA (39:32)
+src/ata.cpp:    hob_ports->high_cylinder = lba_be_bytes[2];  // LBA (47:40)
+src/ata.cpp:    io_ports->device_head   |= 0x40;  // LBA flag; DEV flag is set correctly in kernel
+src/ata.cpp:    cmd_buffer->task.out_flags.all = 0xffff;
+src/ata.cpp:    cmd_buffer->task.data_phase = TASKFILE_NO_DATA;
+src/ata.cpp:    cmd_buffer->task.req_cmd = IDE_DRIVE_TASK_NO_DATA;
+src/posix_erase.cpp:    if (!strcmp(setting->name, "start_lba")) {
+src/posix_erase.cpp:        setting->value = strdup("0");
+src/posix_erase.cpp:    PosixErasePriv *priv = (PosixErasePriv*)ctx->priv;
+src/posix_erase.cpp:    ctx->blk_size = BLK_SIZE;
+src/posix_erase.cpp:    priv->end_lba = ctx->dev->capacity / 512;
+src/posix_erase.cpp:    priv->lba_to_process = priv->end_lba - priv->start_lba;
+src/posix_erase.cpp:    ctx->progress.den = priv->lba_to_process / SECTORS_AT_ONCE;
+src/posix_erase.cpp:    if (priv->lba_to_process % SECTORS_AT_ONCE)
+src/posix_erase.cpp:        ctx->progress.den++;
+src/posix_erase.cpp:    r = posix_memalign(&priv->buf, sysconf(_SC_PAGESIZE), ctx->blk_size);
+src/posix_erase.cpp:    memset(priv->buf, 0, ctx->blk_size);
+src/posix_erase.cpp:    priv->fd = open(ctx->dev->dev_path, O_WRONLY | O_DIRECT | O_LARGEFILE | O_NOATIME);
+src/posix_erase.cpp:    if (priv->fd == -1) {
+src/posix_erase.cpp:        // dc_log(DC_LOG_FATAL, "open %s fail\n", ctx->dev->dev_path);
+src/posix_erase.cpp:    lseek(priv->fd, 512 * priv->start_lba, SEEK_SET);
+src/posix_erase.cpp:    r = ioctl(priv->fd, BLKFLSBUF, NULL);
+src/posix_erase.cpp:    // if (r == -1)
+src/posix_erase.cpp:    free(priv->buf);
+src/posix_erase.cpp:    PosixErasePriv *priv = (PosixErasePriv*)ctx->priv;
+src/posix_erase.cpp:    size_t sectors_to_write = (priv->lba_to_process < SECTORS_AT_ONCE) ? priv->lba_to_process : SECTORS_AT_ONCE;
+src/posix_erase.cpp:    ctx->report.lba = priv->start_lba + SECTORS_AT_ONCE * priv->blk_index;
+src/posix_erase.cpp:    ctx->report.sectors_processed = sectors_to_write;
+src/posix_erase.cpp:    ctx->report.blk_status = DC_BlockStatus_eOk;
+src/posix_erase.cpp:    priv->blk_index++;
+src/posix_erase.cpp:    write_ret = write(priv->fd, priv->buf, sectors_to_write * 512);
+src/posix_erase.cpp:        lseek(priv->fd, 512 * priv->start_lba + ctx->blk_size * priv->blk_index, SEEK_SET);
+src/posix_erase.cpp:        ctx->report.blk_status = DC_BlockStatus_eError;
+src/posix_erase.cpp:    ctx->progress.num++;
+src/posix_erase.cpp:    priv->lba_to_process -= sectors_to_write;
+src/posix_erase.cpp:    PosixErasePriv *priv = (PosixErasePriv*)ctx->priv;
+src/posix_erase.cpp:    free(priv->buf);
+src/posix_erase.cpp:    close(priv->fd);
+src/scsi.cpp:    scsi_cmd->io_hdr.interface_id = 'S';
+src/scsi.cpp:    scsi_cmd->io_hdr.dxfer_direction = SG_DXFER_NONE;
+src/scsi.cpp:    scsi_cmd->io_hdr.cmd_len = 16;
+src/scsi.cpp:    scsi_cmd->io_hdr.mx_sb_len = sizeof(scsi_cmd->sense_buf);
+src/scsi.cpp:    scsi_cmd->io_hdr.iovec_count = 0;
+src/scsi.cpp:    scsi_cmd->io_hdr.dxfer_len = 0;
+src/scsi.cpp:    scsi_cmd->io_hdr.dxferp = NULL;
+src/scsi.cpp:    scsi_cmd->io_hdr.cmdp = scsi_cmd->scsi_cmd;  // Pointer to command
+src/scsi.cpp:    scsi_cmd->io_hdr.sbp = scsi_cmd->sense_buf;
+src/scsi.cpp:    scsi_cmd->io_hdr.timeout = 1000;  // In millisec; MAX_UINT is no timeout
+src/scsi.cpp:    scsi_cmd->io_hdr.flags = SG_FLAG_DIRECT_IO;
+src/scsi.cpp:    scsi_cmd->io_hdr.pack_id = 0;  // Unused internally
+src/scsi.cpp:    scsi_cmd->io_hdr.usr_ptr = 0;  // Unused internally
+src/scsi.cpp:    scsi_cmd->scsi_cmd[0]  = ATA16;  // ATA PASS-THROUGH 16 bytes
+src/scsi.cpp:    scsi_cmd->scsi_cmd[1]  = (3 << 1);  // Non-data protocol
+src/scsi.cpp:    scsi_cmd->scsi_cmd[1] |= 1;  // EXTEND flag
+src/scsi.cpp:    scsi_cmd->scsi_cmd[2]  = 0x20;  // Check condition, no off-line, no data xfer
+src/scsi.cpp:    scsi_cmd->scsi_cmd[3]  = ata_cmd->task.hob_ports[1];  // features
+src/scsi.cpp:    scsi_cmd->scsi_cmd[4]  = ata_cmd->task.io_ports[1];
+src/scsi.cpp:    scsi_cmd->scsi_cmd[5]  = ata_cmd->task.hob_ports[2];  // sectors count
+src/scsi.cpp:    scsi_cmd->scsi_cmd[6]  = ata_cmd->task.io_ports[2];
+src/scsi.cpp:    scsi_cmd->scsi_cmd[7]  = ata_cmd->task.hob_ports[3];  // sector number
+src/scsi.cpp:    scsi_cmd->scsi_cmd[8]  = ata_cmd->task.io_ports[3];
+src/scsi.cpp:    scsi_cmd->scsi_cmd[9]  = ata_cmd->task.hob_ports[4];  // low cylinder
+src/scsi.cpp:    scsi_cmd->scsi_cmd[10] = ata_cmd->task.io_ports[4];
+src/scsi.cpp:    scsi_cmd->scsi_cmd[11] = ata_cmd->task.hob_ports[5];  // high cylinder
+src/scsi.cpp:    scsi_cmd->scsi_cmd[12] = ata_cmd->task.io_ports[5];
+src/scsi.cpp:    scsi_cmd->scsi_cmd[13] = ata_cmd->task.io_ports[6];  // device
+src/scsi.cpp:    scsi_cmd->scsi_cmd[14] = ata_cmd->task.io_ports[7];  // command
+src/scsi.cpp:    uint8_t *descr = &scsi_cmd->sense_buf[8];
+src/scsi.cpp:    memcpy(scsi_ata_ret->descriptor, descr, sizeof(scsi_ata_ret->descriptor));
+src/scsi.cpp:    scsi_ata_ret->error = descr[3];
+src/scsi.cpp:    scsi_ata_ret->status = descr[13];
+src/scsi.cpp:    scsi_ata_ret->lba  = 0;
+src/scsi.cpp:    scsi_ata_ret->lba |= (uint64_t)descr[7];
+src/scsi.cpp:    scsi_ata_ret->lba |= (uint64_t)descr[9]  <<  8;
+src/scsi.cpp:    scsi_ata_ret->lba |= (uint64_t)descr[11] << 16;
+src/scsi.cpp:    scsi_ata_ret->lba |= (uint64_t)descr[6]  << 24;
+src/scsi.cpp:    scsi_ata_ret->lba |= (uint64_t)descr[8]  << 32;
+src/scsi.cpp:    scsi_ata_ret->lba |= (uint64_t)descr[10] << 40;
+src/scsi.cpp:            return -1;
+src/scsi.cpp:    if (scsi_command->io_hdr.status == 0)
+src/scsi.cpp:    if (scsi_command->io_hdr.status != 0x02 /* CHECK_CONDITION */)
+src/scsi.cpp:    int sense_key = get_sense_key_from_sense_buffer(scsi_command->sense_buf);
+src/scsi.cpp:            scsi_command->io_hdr.status,
+src/scsi.cpp:            scsi_command->io_hdr.msg_status,
+src/scsi.cpp:            scsi_command->io_hdr.host_status,
+src/scsi.cpp:            scsi_command->io_hdr.driver_status,
+src/scsi.cpp:            scsi_command->io_hdr.duration,
+src/scsi.cpp:            scsi_command->io_hdr.info);
+src/scsi.cpp:    for (i = 0; i < sizeof(scsi_command->sense_buf); i++)
+src/scsi.cpp:        fprintf(stderr, "%02hhx", scsi_command->sense_buf[i]);
+src/scsi.cpp:    } else if (scsi_command->io_hdr.duration >= scsi_command->io_hdr.timeout) {
+src/badsurflib.cpp:    list->arr = NULL;
+src/badsurflib.cpp:    list->arr_size = 0;
+src/badsurflib.cpp:    while (list->arr) {
+src/badsurflib.cpp:        DC_Dev *next = list->arr->next;
+src/badsurflib.cpp:        free(list->arr);
+src/badsurflib.cpp:        list->arr = next;
+src/badsurflib.cpp:    return list->arr_size;
+src/badsurflib.cpp:    DC_Dev *dev = list->arr;
+src/badsurflib.cpp:        dev = dev->next;
+src/badsurflib.cpp:        index--;
+src/badsurflib.cpp:        dc_dev->node_path = strdup(d.node().c_str());
+src/badsurflib.cpp:        dc_dev->model_str = strdup(d.property("ID_MODEL").c_str());
+src/badsurflib.cpp:            dc_dev->security_on =
+src/badsurflib.cpp:            dc_dev->hpa_enabled =
+src/badsurflib.cpp:        dc_dev->next = dc_devlist->arr;
+src/badsurflib.cpp:        dc_devlist->arr = dc_dev;
+src/badsurflib.cpp:        dc_devlist->arr_size++;
+src/badsurflib.cpp:    DC_Dev *dev = list->arr;
+src/badsurflib.cpp:        memset(dev->identify, 0, IDENTIFY_SIZE);
+src/badsurflib.cpp:        dev->ata_capable = !dc_dev_ata_identify((char*)dev->node_path, dev->identify);
+src/badsurflib.cpp:        if (dev->ata_capable) {
+src/badsurflib.cpp:            dc_dev_get_capacity((char*)dev->node_path, &dev->capacity);
+src/badsurflib.cpp:            dc_dev_get_native_capacity((char*)dev->node_path, &dev->native_capacity);
+src/badsurflib.cpp:            dev->serial_no = (char*)calloc(1, 21);
+src/badsurflib.cpp:            dc_ata_ascii_to_c_string(dev->identify + 20, 10, dev->serial_no);
+src/badsurflib.cpp:            dev->model_str = (char*)calloc(1, 41);
+src/badsurflib.cpp:            dc_ata_ascii_to_c_string(dev->identify + 54, 20, (char*)dev->model_str);
+src/badsurflib.cpp:            //     fprintf(stderr, "%c", dev->identify[i]);
+src/badsurflib.cpp:        // if (!dev->model_str)
+src/badsurflib.cpp:        dev = dev->next;
+src/read_test.cpp:    if (!strcmp(setting->name, "api")) {
+src/read_test.cpp:        if (dev->ata_capable)
+src/read_test.cpp:            setting->value = strdup("ata");
+src/read_test.cpp:            setting->value = strdup("posix");
+src/read_test.cpp:    } else if (!strcmp(setting->name, "start_lba")) {
+src/read_test.cpp:        setting->value = strdup("0");
+src/read_test.cpp:    } else if (!strcmp(setting->name, "end_lba")) {
+src/read_test.cpp:        sprintf(value_str, "%ld", dev->capacity);
+src/read_test.cpp:        setting->value = strdup(value_str);
+src/read_test.cpp:    ReadPriv *priv = (ReadPriv*)ctx->priv;
+src/read_test.cpp:    if (!strcmp(priv->api_str, "ata"))
+src/read_test.cpp:        priv->api = Api_eAta;
+src/read_test.cpp:    else if (!strcmp(priv->api_str, "posix"))
+src/read_test.cpp:        priv->api = Api_ePosix;
+src/read_test.cpp:    if (priv->api == Api_eAta && !ctx->dev->ata_capable)
+src/read_test.cpp:    ctx->blk_size = BLK_SIZE;
+src/read_test.cpp:    priv->current_lba = priv->start_lba;
+src/read_test.cpp:    priv->end_lba = ctx->dev->capacity / 512;
+src/read_test.cpp:    priv->lba_to_process = priv->end_lba - priv->start_lba;
+src/read_test.cpp:    if (priv->lba_to_process <= 0)
+src/read_test.cpp:    ctx->progress.den = priv->lba_to_process / SECTORS_AT_ONCE;
+src/read_test.cpp:    if (priv->lba_to_process % SECTORS_AT_ONCE)
+src/read_test.cpp:        ctx->progress.den++;
+src/read_test.cpp:    if (priv->api == Api_eAta) {
+src/read_test.cpp:        r = posix_memalign(&priv->buf, sysconf(_SC_PAGESIZE), ctx->blk_size);
+src/read_test.cpp:    priv->fd = open(ctx->dev->node_path, open_flags);
+src/read_test.cpp:    if (priv->fd == -1) {
+src/read_test.cpp:        // dc_log(DC_LOG_FATAL, "open %s fail\n", ctx->dev->dev_path);
+src/read_test.cpp:    lseek(priv->fd, 512 * priv->start_lba, SEEK_SET);
+src/read_test.cpp:    r = ioctl(priv->fd, BLKFLSBUF, NULL);
+src/read_test.cpp:    if (r == -1)
+src/read_test.cpp:    r = ioctl(priv->fd, BLKRAGET, &priv->old_readahead);
+src/read_test.cpp:    if (r == -1)
+src/read_test.cpp:    r = ioctl(priv->fd, BLKRASET, 0);
+src/read_test.cpp:    if (r == -1)
+src/read_test.cpp:    ReadPriv *priv = (ReadPriv*)ctx->priv;
+src/read_test.cpp:    size_t sectors_to_read = (priv->lba_to_process < SECTORS_AT_ONCE) ? priv->lba_to_process : SECTORS_AT_ONCE;
+src/read_test.cpp:    ctx->report.lba = priv->current_lba;
+src/read_test.cpp:    ctx->report.sectors_processed = sectors_to_read;
+src/read_test.cpp:    ctx->report.blk_status = DC_BlockStatus_eOk;
+src/read_test.cpp:    if (priv->api == Api_eAta) {
+src/read_test.cpp:        memset(&priv->ata_command, 0, sizeof(priv->ata_command));
+src/read_test.cpp:        memset(&priv->scsi_command, 0, sizeof(priv->scsi_command));
+src/read_test.cpp:        prepare_ata_command(&priv->ata_command, WIN_VERIFY_EXT /* 42h */, priv->current_lba, sectors_to_read);
+src/read_test.cpp:        prepare_scsi_command_from_ata(&priv->scsi_command, &priv->ata_command);
+src/read_test.cpp:    if (priv->api == Api_eAta)
+src/read_test.cpp:        ioctl_ret = ioctl(priv->fd, SG_IO, &priv->scsi_command);
+src/read_test.cpp:        read_ret = read(priv->fd, priv->buf, sectors_to_read * 512);
+src/read_test.cpp:    if (priv->api == Api_eAta) {
+src/read_test.cpp:            ctx->report.blk_status = DC_BlockStatus_eError;
+src/read_test.cpp:        ctx->report.blk_status = scsi_ata_check_return_status(&priv->scsi_command);
+src/read_test.cpp:            lseek(priv->fd, 512 * priv->current_lba, SEEK_SET);
+src/read_test.cpp:            ctx->report.blk_status = DC_BlockStatus_eError;
+src/read_test.cpp:    ctx->progress.num++;
+src/read_test.cpp:    priv->lba_to_process -= sectors_to_read;
+src/read_test.cpp:    priv->current_lba += sectors_to_read;
+src/read_test.cpp:    ReadPriv *priv = (ReadPriv*)ctx->priv;
+src/read_test.cpp:    int r = ioctl(priv->fd, BLKRASET, priv->old_readahead);
+src/read_test.cpp:    if (r == -1) {
+src/read_test.cpp:        free(priv->buf);
+src/read_test.cpp:        close(priv->fd);
+src/smart_parse.cpp: * 193 Load_Cycle_Count        -O--CK   148   148   000    -    156729
+src/smart_parse.cpp:    int name_len = attr_line - name - 1;
+src/smart_parse.cpp:    attr.fail = (attr_line[18] != '-') ? true : false;
+include/badsurflib/smart_parse.hpp: * 193 Load_Cycle_Count        -O--CK   148   148   000    -    156729
+src/posix/error.cpp:namespace { auto to_errc(int n) { return static_cast<errc>(n < 0 ? -n : n); } }
+src/udev/udev.cpp:// move udev stuff into detail namespace 8-o
+src/udev/monitor.cpp:// move udev stuff into detail namespace 8-o
+src/udev/monitor.cpp:        static_cast<posix::errc>(code < 0 ? -code : code)
+src/posix/resource.cpp:// Copyright (c) 2017-18 Dimitry Ishenko
+src/posix/resource.cpp:        time == msec::max() ? -1 : static_cast<int>(time.count())
+src/posix/resource.cpp:    if(count == -1) throw posix::errno_error();
+src/udev/device.cpp:// move udev stuff into detail namespace 8-o
+src/udev/enumerate.cpp:// move udev stuff into detail namespace 8-o
+src/udev/enumerate.cpp:        static_cast<posix::errc>(code < 0 ? -code : code)
+include/badsurflib/posix/error.hpp:// Copyright (c) 2017-2018 Dimitry Ishenko
+include/badsurflib/posix/resource.hpp:// Copyright (c) 2017-2018 Dimitry Ishenko
+include/badsurflib/posix/resource.hpp:static constexpr desc ndesc = -1;
+include/badsurflib/posix/resource.hpp:    return try_read_for(tp - (tp < now ? tp : now));
+include/badsurflib/posix/resource.hpp:    return try_write_for(tp - (tp < now ? tp : now));
+include/badsurflib/udev/monitor.hpp:// The cancel() function provides thread-safe way to cancel pending try_get*().
+include/badsurflib/udev/monitor.hpp:    return try_get_for(tp - (tp < now ? tp : now));

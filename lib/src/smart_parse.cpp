@@ -4,6 +4,8 @@
 #include <cctype>
 #include <cassert>
 
+#include <vector>
+
 #include "badsurflib/smart_parse.hpp"
 #include "badsurflib/types.hpp"
 
@@ -13,20 +15,22 @@ char *smart_text_attrs_start(char *text)
     assert(text != NULL);
 
     char ch = *text;
-    for (size_t i = 0; text[i] != '\0'; i++) {
-        ch = text[i];
+    while (*text++) {
         if (ch == '\n') {
-            if (!strncmp(text + i, "ID#", 3)) {
-                return text + i + 1;
+            if (!strncmp(text, "ID#", 3)) {
+                return text;
             }
         }
+        ch = *text;
     }
+
     return NULL;
 }
 
-void smart_attr_get_line(char *attrs_start)
+char *smart_attr_get_line(char *attrs_start)
 {
     while (*attrs_start++ != '\n');
+    return attrs_start;
 }
 
 /**
@@ -73,4 +77,27 @@ smart_attr_t smart_attr_from_line(char *attr_line)
     attr.raw = atoll(&attr_line[23]);
 
     return attr;
+}
+
+u8 smart_attrs_from_text(std::vector<smart_attr_t> &attrs, char *text)
+{
+    assert(text != NULL);
+
+    char *start = smart_text_attrs_start(text);
+    char *line = start;
+
+    u8 i_attr = 0;
+    while (*line) {
+
+        line = smart_attr_get_line(line);
+        if (line[2] == ' ') {
+            return i_attr + 1;
+        }
+
+        smart_attr_t attr = smart_attr_from_line(line);
+        attrs.push_back(attr);
+
+        i_attr++;
+    }
+    return 0;
 }

@@ -1,7 +1,10 @@
 #ifndef SMARTPARSE_HPP
 #define SMARTPARSE_HPP
 
+#include "badsurflib/objects_def.hpp"
 #include "badsurflib/types.hpp"
+
+#include <vector>
 
 
 typedef struct smart_attr {
@@ -22,7 +25,7 @@ typedef struct smart_attr {
  */
 char *smart_text_attrs_start(char *text);
 
-void smart_attr_get_line(char *attrs_start);
+char *smart_attr_get_line(char *attrs_start);
 
 /**
  * Example attribute row
@@ -30,6 +33,8 @@ void smart_attr_get_line(char *attrs_start);
  * 193 Load_Cycle_Count        -O--CK   148   148   000    -    156729
  */
 smart_attr_t smart_attr_from_line(char *attr_line);
+
+u8 smart_attrs_from_text(std::vector<smart_attr_t> &attrs, char *text);
 
 
 #endif // SMARTPARSE_HPP
