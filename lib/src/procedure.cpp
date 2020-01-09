@@ -20,7 +20,7 @@ int dc_procedure_register(DC_Procedure *procedure) {
     return 0;
 }
 
-DC_Procedure *dc_find_procedure(char *name) {
+DC_Procedure *dc_find_procedure(const char *name) {
     DC_Procedure *iter = dc_ctx_global->procedure_list;
     while (iter) {
         if (!strcmp(iter->name, name))

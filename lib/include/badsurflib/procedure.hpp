@@ -47,8 +47,8 @@ struct dc_procedure {
 };
 
 int dc_procedure_register(DC_Procedure *procedure);
-DC_Procedure *dc_find_procedure(char *name);
-// int dc_get_nb_procedures();
+DC_Procedure *dc_find_procedure(const char *name);
+int dc_get_nb_procedures();
 DC_Procedure *dc_get_next_procedure(DC_Procedure *prev);
 DC_Procedure *dc_get_procedure_by_index(int index);
 
