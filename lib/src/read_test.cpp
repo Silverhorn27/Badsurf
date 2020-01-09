@@ -44,6 +44,11 @@ static int SuggestDefaultValue(DC_Dev *dev, DC_OptionSetting *setting) {
             setting->value = strdup("posix");
     } else if (!strcmp(setting->name, "start_lba")) {
         setting->value = strdup("0");
+    } else if (!strcmp(setting->name, "end_lba")) {
+        char value_str[21] = "\0";
+        sprintf(value_str, "%ld", dev->capacity);
+
+        setting->value = strdup(value_str);
     } else {
         return 1;
     }
@@ -175,6 +180,7 @@ static void Close(DC_ProcedureCtx *ctx) {
 static DC_ProcedureOption options[] = {
     { "api", "select operation API: \"posix\" for POSIX read(), \"ata\" for ATA \"READ VERIFY EXT\" command", offsetof(ReadPriv, api_str), DC_ProcedureOptionType_eString },
     { "start_lba", "set LBA address to begin from", offsetof(ReadPriv, start_lba), DC_ProcedureOptionType_eInt64 },
+    { "end_lba", "set end LBA address", offsetof(ReadPriv, end_lba), DC_ProcedureOptionType_eInt64 },
     { NULL }
 };
 
