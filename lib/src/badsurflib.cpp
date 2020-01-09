@@ -81,6 +81,8 @@ DC_DevList *dc_dev_list(void) {
 void dc_dev_list_free(DC_DevList *list) {
     while (list->arr) {
         DC_Dev *next = list->arr->next;
+        free((void*)list->arr->node_path);
+        free((void*)list->arr->model_str);
         free(list->arr);
         list->arr = next;
     }

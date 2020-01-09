@@ -33,7 +33,10 @@ static int Open(DC_ProcedureCtx *ctx) {
 }
 
 static void Close(DC_ProcedureCtx *ctx) {
-    (void)ctx;
+    std::vector<smart_attr_t> attrs = ctx->smart_attrs.attrs_vec;
+    for (auto &a : attrs) {
+        free(a.attr_name);
+    }
 }
 
 DC_Procedure smart_show = {
