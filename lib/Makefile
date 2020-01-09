@@ -15,6 +15,7 @@ SRCS :=  \
 	src/utils.cpp \
 	src/read_test.cpp \
 	src/procedure.cpp \
+	src/smart_parse.cpp \
 	src/smart_show.cpp \
 	src/badsurflib.cpp \
 
