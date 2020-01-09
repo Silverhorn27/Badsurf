@@ -1,31 +1,21 @@
-# CC := gcc
-CC := clang
-LDFLAGS=
+CC := g++
 INCUDES := -I../include
-CFLAGS += -Wall -Wextra -Wpedantic -std=gnu99 -g $(INCUDES) $(LDFLAGS)
+LDFLAGS := ../libbadsurf.so
+CFLAGS += -Wall -Wextra -Wpedantic -std=c++2a -g $(INCUDES) $(LDFLAGS)
 ELF := ../run_tests
 
 SRCS :=  \
-	../src/string.c \
-	../src/list.c \
-	\
-	string_test.c \
-	list_test.c \
-	result_test.c \
-	\
-	tests_main.c
+	badsurf_test.cpp \
+	tests_main.cpp
 
-OBJS := $(SRCS:.c=.o)
+OBJS := $(SRCS:.cpp=.o)
 
 all: $(ELF)
 
 $(ELF): $(OBJS)
-	$(CC) $(LDFLAGS) $? -o $@
+	$(CC) $(LDFLAGS) $^ -o $@
 
-../src/%.o : ../src/%.c
-	$(CC) $(CFLAGS) -c $? -o $@
-
-%.o : %.c
+%.o: %.cpp
 	$(CC) $(CFLAGS) -c $?
 
 clean:
