@@ -10,25 +10,19 @@
 #include "badsurflib/utils.hpp"
 
 struct smart_show_priv {
-    std::vector<smart_attr_t> v_attrs;
-    u8 n_attrs;
 };
 typedef struct smart_show_priv SmartShowPriv;
 
-/**
- * Represents each column in SMART attributes table
- */
 
 static int Open(DC_ProcedureCtx *ctx) {
     char *text = dc_dev_smartctl_text((char*)ctx->dev->node_path, " -A -f brief ");
-    SmartShowPriv *priv = (SmartShowPriv*)ctx->priv;
 
     if (text) {
         std::vector<smart_attr_t> attrs;
         u8 n_attrs = smart_attrs_from_text(attrs, text);
 
-        priv->v_attrs = attrs;
-        priv->n_attrs = n_attrs;
+        ctx->smart_attrs.attrs_vec = attrs;
+        ctx->smart_attrs.n_attrs = n_attrs;
 
         free(text);
         return 0;

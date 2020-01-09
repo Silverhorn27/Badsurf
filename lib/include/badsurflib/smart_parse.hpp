@@ -6,7 +6,9 @@
 
 #include <vector>
 
-
+/**
+ * Represents each column in SMART attributes table
+ */
 typedef struct smart_attr {
     char *attr_name;
     u8 id;
@@ -16,6 +18,11 @@ typedef struct smart_attr {
     bool fail : 1;
     u64 raw;
 } smart_attr_t;
+
+typedef struct smart_out_data {
+    std::vector<smart_attr_t> attrs_vec;
+    u8 n_attrs;
+} smart_out_data;
 
 /**
  * That's how start of attributes table represented

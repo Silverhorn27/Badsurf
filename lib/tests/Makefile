@@ -19,4 +19,4 @@ $(ELF): $(OBJS)
 	$(CC) $(CFLAGS) -c $?
 
 clean:
-	rm $(OBJS) $(ELF)
+	rm -rf $(OBJS) $(ELF)

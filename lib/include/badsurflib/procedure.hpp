@@ -3,6 +3,7 @@
 
 #include "badsurflib/badsurflib.hpp"
 #include "badsurflib/device.hpp"
+#include "badsurflib/smart_parse.hpp"
 #include <pthread.h>
 #include <cstddef>
 
@@ -86,6 +87,7 @@ struct dc_procedure_ctx {
     unsigned finished : 1; // if 1, then looped processing has finished
     DC_BlockReport report; // updated by procedure on .perform()
     void *user_priv;  // pointer to user interface private data
+    smart_out_data smart_attrs;
     struct timespec time_pre, time_post;  // block processing timing
 };
 
