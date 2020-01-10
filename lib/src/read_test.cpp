@@ -46,7 +46,7 @@ static int SuggestDefaultValue(DC_Dev *dev, DC_OptionSetting *setting) {
         setting->value = strdup("0");
     } else if (!strcmp(setting->name, "end_lba")) {
         char value_str[21] = "\0";
-        sprintf(value_str, "%ld", dev->capacity);
+        sprintf(value_str, "%ld", dev->capacity / 512);
 
         setting->value = strdup(value_str);
     } else {
@@ -71,7 +71,7 @@ static int Open(DC_ProcedureCtx *ctx) {
         return 1;
     ctx->blk_size = BLK_SIZE;
     priv->current_lba = priv->start_lba;
-    priv->end_lba = ctx->dev->capacity / 512;
+    // priv->end_lba = ctx->dev->capacity / 512;
     priv->lba_to_process = priv->end_lba - priv->start_lba;
     if (priv->lba_to_process <= 0)
         return 1;
