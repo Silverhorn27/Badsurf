@@ -60,13 +60,13 @@ void SmartTab::on_pushButton_clicked()
     int i = 0;
     for (auto &a : actctx->smart_attrs.attrs_vec) {
         ui->tableWidget->insertRow(i);
-//        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(a.id)));
-//        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(QString::fromLatin1(a.attr_name)));
-//        ui->tableWidget->setItem(i, 2, new QTableWidgetItem(QString::number(a.value)));
-//        ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(a.worst)));
-//        ui->tableWidget->setItem(i, 4, new QTableWidgetItem(QString::number(a.threshold)));
-//        ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString(a.fail)));
-//        ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString::number(a.raw)));
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(a.id)));
+        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(QString::fromLatin1(a.attr_name)));
+        ui->tableWidget->setItem(i, 2, new QTableWidgetItem(QString::number(a.value)));
+        ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(a.worst)));
+        ui->tableWidget->setItem(i, 4, new QTableWidgetItem(QString::number(a.threshold)));
+        ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString::number(a.fail)));
+        ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString::number(a.raw)));
         i++;
     }
 
