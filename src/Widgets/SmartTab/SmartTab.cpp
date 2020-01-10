@@ -20,15 +20,15 @@ SmartTab::SmartTab(QWidget *parent)
     ui->tableWidget->insertColumn(5);
     ui->tableWidget->insertColumn(6);
     QStringList headerLabels;
-    headerLabels << "ID" << "Attribut name" << "VAL" << "Wrst" << "Tresh" << "Fail" << "Raw";
+    headerLabels << "ID" << "Attribute name" << "Value" << "Worst" << "Tresh" << "Fail" << "Raw";
     ui->tableWidget->setHorizontalHeaderLabels(headerLabels);
-    ui->tableWidget->setColumnWidth(0, 60);
+    ui->tableWidget->setColumnWidth(0, 50);
     ui->tableWidget->setColumnWidth(1, 270);
-    ui->tableWidget->setColumnWidth(2, 60);
-    ui->tableWidget->setColumnWidth(3, 60);
-    ui->tableWidget->setColumnWidth(4, 60);
-    ui->tableWidget->setColumnWidth(5, 130);
-    ui->tableWidget->setColumnWidth(6, 100);
+    ui->tableWidget->setColumnWidth(2, 70);
+    ui->tableWidget->setColumnWidth(3, 70);
+    ui->tableWidget->setColumnWidth(4, 70);
+    ui->tableWidget->setColumnWidth(5, 70);
+    ui->tableWidget->setColumnWidth(6, 142);
     ui->tableWidget->insertRow(0);
 
 }
@@ -60,13 +60,25 @@ void SmartTab::on_pushButton_clicked()
     int i = 0;
     for (auto &a : actctx->smart_attrs.attrs_vec) {
         ui->tableWidget->insertRow(i);
-        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(a.id)));
+        QTableWidgetItem *id = new QTableWidgetItem(QString::number(a.id));
+        id->setTextAlignment(Qt::AlignRight | Qt::AlignCenter);
+        ui->tableWidget->setItem(i, 0, id);
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(QString::fromLatin1(a.attr_name)));
-        ui->tableWidget->setItem(i, 2, new QTableWidgetItem(QString::number(a.value)));
-        ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(a.worst)));
-        ui->tableWidget->setItem(i, 4, new QTableWidgetItem(QString::number(a.threshold)));
-        ui->tableWidget->setItem(i, 5, new QTableWidgetItem(QString::number(a.fail)));
-        ui->tableWidget->setItem(i, 6, new QTableWidgetItem(QString::number(a.raw)));
+        QTableWidgetItem *value = new QTableWidgetItem(QString::number(a.value));
+        value->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidget->setItem(i, 2, value);
+        QTableWidgetItem *worst = new QTableWidgetItem(QString::number(a.worst));
+        worst->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidget->setItem(i, 3, worst);
+        QTableWidgetItem *threshold = new QTableWidgetItem(QString::number(a.threshold));
+        threshold->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidget->setItem(i, 4, threshold);
+        QTableWidgetItem *fail = new QTableWidgetItem(QString::number(a.fail));
+        fail->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidget->setItem(i, 5, fail);
+        QTableWidgetItem *raw = new QTableWidgetItem(QString::number(a.raw));
+        raw->setTextAlignment(Qt::AlignCenter);
+        ui->tableWidget->setItem(i, 6, raw);
         i++;
     }
 
