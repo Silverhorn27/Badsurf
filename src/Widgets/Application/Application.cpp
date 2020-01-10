@@ -56,6 +56,8 @@ Application::~Application()
 
 void Application::currentDevChanged(DC_Dev *dev)
 {
+    _logger.log(Logger::INFO, QString("Selected disk: ").toStdString()
+                + QString::fromLatin1(dev->model_str).toStdString());
     _smartTab->setCurrentDev(dev);
     _testingTab->setCurrentDev(dev);
 }

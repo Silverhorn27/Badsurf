@@ -2,6 +2,10 @@
 #define TESTING_H
 
 #include <QObject>
+#include "badsurflib/objects_def.hpp"
+#include "badsurflib/badsurflib.hpp"
+#include "badsurflib/procedure.hpp"
+#include "badsurflib/device.hpp"
 
 enum DiskBlockAccess {
     BLK_TL3 = 0,

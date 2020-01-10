@@ -18,7 +18,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_7">
    <property name="verticalSpacing">
-    <number>5</number>
+    <number>6</number>
    </property>
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -162,6 +162,9 @@
         <string>Log</string>
        </property>
        <layout class="QGridLayout" name="gridLayout">
+        <property name="verticalSpacing">
+         <number>6</number>
+        </property>
         <item row="2" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
@@ -286,10 +289,13 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>777</width>
-       <height>104</height>
+       <width>10</width>
+       <height>10000</height>
       </size>
      </property>
     </spacer>

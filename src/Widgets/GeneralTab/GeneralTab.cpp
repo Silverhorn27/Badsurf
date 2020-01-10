@@ -36,13 +36,15 @@ GeneralTab::GeneralTab(QWidget *parent)
     headerLabels << " " << "Disk information";
 
     ui->tableWidget->setHorizontalHeaderLabels(headerLabels);
-    ui->tableWidget->setColumnWidth(0, 224);
+    ui->tableWidget->setColumnWidth(0, 219);
     ui->tableWidget->setColumnWidth(1, 540);
 
 }
 
 GeneralTab::~GeneralTab()
 {
+    ui->tableWidget->setRowCount(0);
+    dc_dev_list_free(_devlist);
     delete ui;
 }
 
@@ -82,24 +84,34 @@ DC_Dev *GeneralTab::currentDev()
 void GeneralTab::on_pushButton_clicked()
 {
     ui->tableWidget->setRowCount(0);
-    for(int i = 0; i < 6; ++i) {
+    for(int i = 0; i < 7; ++i) {
         ui->tableWidget->insertRow(i);
         ui->tableWidget->setItem(i, 0,
                                  new QTableWidgetItem(DEVICE_INFO.at(static_cast<size_t>(i))));
     }
-    ui->tableWidget->setItem(0, 1,
-                             new QTableWidgetItem(QString::fromLatin1(_currentDev->node_path)));
+    ui->tableWidget->setItem(0, 1, new QTableWidgetItem(QString::fromLatin1(_currentDev->node_path)));
     ui->tableWidget->setItem(1, 1,
                              new QTableWidgetItem(QString::fromLatin1(_currentDev->model_str)));
     ui->tableWidget->setItem(2, 1,
                              new QTableWidgetItem(QString::fromLatin1(_currentDev->serial_no)));
+    double capacity = static_cast<double>(_currentDev->native_capacity) / 1024.0 / 1024.0 / 1024.0;
+
     ui->tableWidget->setItem(3, 1,
-                             new QTableWidgetItem(QString::number(_currentDev->capacity)));
+                             new QTableWidgetItem(QString().setNum(capacity, 'f', 2) + QString(" GB")));
     ui->tableWidget->setItem(4, 1,
-                             new QTableWidgetItem(QString::number(_currentDev->native_capacity)));
+                             new QTableWidgetItem(QString::number(_currentDev->capacity >> 5)));
+    QString str;
+    if (_currentDev->security_on)
+        str = "Enabled";
+    else
+        str = "Disabled";
     ui->tableWidget->setItem(5, 1,
-                             new QTableWidgetItem(QString::number(_currentDev->security_on)));
+                             new QTableWidgetItem(str));
+    if (_currentDev->hpa_enabled)
+        str = "Enabled";
+    else
+        str = "Disabled";
     ui->tableWidget->setItem(6, 1,
-                             new QTableWidgetItem(QString::number(_currentDev->hpa_enabled)));
+                             new QTableWidgetItem(str));
 
 }

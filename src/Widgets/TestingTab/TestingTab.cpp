@@ -9,6 +9,7 @@
 TestingTab::TestingTab(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::TestingTab)
+    , _logger("TestingTab")
     , _test(nullptr)
     , _stopShow(false)
 {
@@ -47,22 +48,22 @@ void TestingTab::paintStatusBlocks()
 {
     QPixmap pix(QSize(20,30));
     QPainter painter(&pix);
-    painter.setBrush(Qt::black);
+    painter.setBrush(QBrush(QColor("#C9C9CA")));
     painter.drawRect(0, 0, 20, 40);
     ui->whiteLabel->setPixmap(pix);
-    painter.setBrush(Qt::gray);
+    painter.setBrush(QBrush(QColor("#AAAAAB")));
     painter.drawRect(0, 0, 20, 40);
     ui->greyLabel->setPixmap(pix);
-    painter.setBrush(Qt::white);
+    painter.setBrush(QBrush(QColor("#808080")));
     painter.drawRect(0, 0, 20, 40);
     ui->blackLabel->setPixmap(pix);
-    painter.setBrush(Qt::green);
+    painter.setBrush(QBrush(QColor("#05EF00")));
     painter.drawRect(0, 0, 20, 40);
     ui->greenLabel->setPixmap(pix);
-    painter.setBrush(Qt::yellow);
+    painter.setBrush(QBrush(QColor("#FF8000")));
     painter.drawRect(0, 0, 20, 40);
     ui->orangeLabel->setPixmap(pix);
-    painter.setBrush(Qt::red);
+    painter.setBrush(QBrush(QColor("#F60909")));
     painter.drawRect(0, 0, 20, 40);
     ui->redLabel->setPixmap(pix);
 
@@ -71,7 +72,9 @@ void TestingTab::paintStatusBlocks()
 void TestingTab::readSectors()
 {
     _stopShow = false;
+    _logger.log(Logger::INFO, "Start testing");
     QFuture<void> ftest = QtConcurrent::run(&this->_test, &Test::process,
+//                                            _currentDev,
                                             ui->startLine->text().toULong(),
                                             ui->endLine->text().toULong());
     QFuture<void> fshow = QtConcurrent::run(this, &TestingTab::showResult);
@@ -87,7 +90,7 @@ TestingTab::~TestingTab()
 void TestingTab::setCurrentDev(DC_Dev *dev)
 {
     _currentDev = dev;
-    ui->endLine->setText(QString::number(dev->capacity));
+    ui->endLine->setText(QString::number(dev->capacity >> 5));
 }
 
 void TestingTab::on_startButton_clicked()
@@ -146,9 +149,9 @@ void TestingTab::stopShowResult()
 void TestingTab::addRect(DiskBlockAccess status)
 {
     if (status % 2 == 0) {
-        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(Qt::black));
+        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#C9C9CA")));
     } else
-        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(Qt::gray));
+        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#AAAAAB")));
     _x += 20;
     if (_y > 360)
         ui->graphicsView->verticalScrollBar()->setValue(_y);

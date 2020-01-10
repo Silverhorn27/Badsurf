@@ -6,6 +6,7 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QGraphicsScene>
 #include "Test.h"
+#include "Logger/Logger.h"
 #include <badsurflib/objects_def.hpp>
 #include <badsurflib/badsurflib.hpp>
 #include <badsurflib/device.hpp>
@@ -44,9 +45,10 @@ signals:
 
 private:
     Ui::TestingTab *ui;
-    DC_Dev *_currentDev;
+    Logger _logger;
     Test _test;
     bool _stopShow;
+    DC_Dev *_currentDev;
     std::array<uint32_t, 13> _sectorsCounter;
     int _x;
     int _y;

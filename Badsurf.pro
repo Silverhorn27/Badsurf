@@ -56,7 +56,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+
 unix:!macx: LIBS += -L$$PWD/lib/ -lbadsurf
+QMAKE_RPATHDIR += .$$PWD/lib/
 
 INCLUDEPATH += $$PWD/lib/include
 DEPENDPATH += $$PWD/lib/include

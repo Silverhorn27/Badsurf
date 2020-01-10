@@ -64,7 +64,7 @@ QString Logger::logImpl(const QString& line)
         out << logStr + "\n";
     }
 
-    return logStr;
+    return QDateTime::currentDateTime().toString("hh:mm:ss ") + line;
 }
 
 string Logger::describeLevel(Logger::Level level)
