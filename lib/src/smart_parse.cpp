@@ -58,6 +58,7 @@ smart_attr_t smart_attr_from_line(char *attr_line)
     assert(attr.attr_name != NULL);
 
     strncpy(attr.attr_name, name, name_len);
+    attr.attr_name[name_len] = '\0';
 
     /* replace underscores with spaces */
     for (int i = 0; attr.attr_name[i] != '\0'; i++) {
