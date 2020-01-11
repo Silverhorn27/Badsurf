@@ -6,7 +6,8 @@
 #define N_TESTS 1
 
 const Test TESTS[] = {
-    {"badsurf", badsurf_test}
+    {"smart_show", smart_show_test},
+    {"read_show", read_test}
 };
 
 int main()

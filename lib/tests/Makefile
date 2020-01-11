@@ -5,7 +5,8 @@ CFLAGS += -Wall -Wextra -Wpedantic -std=c++2a -g $(INCUDES) $(LDFLAGS)
 ELF := ../run_tests
 
 SRCS :=  \
-	badsurf_test.cpp \
+	smart_show_test.cpp \
+	read_test.cpp \
 	tests_main.cpp
 
 OBJS := $(SRCS:.cpp=.o)
