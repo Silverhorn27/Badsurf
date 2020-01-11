@@ -52,6 +52,7 @@ smart_attr_t smart_attr_from_line(char *attr_line)
     char *name = attr_line;
 
     while (*attr_line++ != ' ');
+    attr_line--;
 
     int name_len = attr_line - name - 1;
     attr.attr_name = (char*)malloc(sizeof(char) * (name_len + 1));

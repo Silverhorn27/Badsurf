@@ -74,7 +74,7 @@ int dc_realtime_scheduling_enable_with_prio(int prio) {
     else
         sched_param.sched_priority = sched_get_priority_min(SCHED_FIFO);
     r = pthread_setschedparam(pthread_self(), SCHED_FIFO, &sched_param);
-    if (r)
+    //if (r)
         // dc_log(DC_LOG_WARNING, "Failed to enable realtime scheduling, pthread_setschedparam errno %d\n", errno);
     return r;
 }
