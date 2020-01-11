@@ -2,4 +2,3 @@ lib/cscope.out
 lib/tags
 lib/libbadsurf.so
 lib/peda-session-run_tests.txt
-lib/tests

@@ -9,4 +9,5 @@ typedef struct {
 
 extern const Test TESTS[];
 
-int badsurf_test();
+int smart_show_test();
+int read_test();
