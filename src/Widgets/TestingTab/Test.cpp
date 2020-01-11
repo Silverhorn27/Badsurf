@@ -13,13 +13,14 @@ int Test::procedure_perform_loop(DC_ProcedureCtx *ctx) {
     int r;
     int ret = 0;
     int perform_ret;
-    while (!ctx->interrupt) {
-        if (ctx->progress.num >= ctx->progress.den)
-            break;
+    while (!ctx->interrupt && !_stop) {
         if (_stop)
             ctx->interrupt = 1;
+        if (ctx->progress.num >= ctx->progress.den)
+            break;
         perform_ret = ctx->procedure->perform(ctx);
-        r = callback(ctx);
+        r = 0;
+        emit read(ctx->report);
         if (perform_ret) {
             ret = perform_ret;
             break;

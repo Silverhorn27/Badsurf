@@ -90,7 +90,7 @@ TestingTab::~TestingTab()
 void TestingTab::setCurrentDev(DC_Dev *dev)
 {
     _currentDev = dev;
-    ui->endLine->setText(QString::number(dev->capacity >> 5));
+    ui->endLine->setText(QString::number(dev->capacity / 512 - 1));
 }
 
 void TestingTab::on_startButton_clicked()
@@ -123,18 +123,18 @@ void TestingTab::on_pauseButton_clicked()
 
 void TestingTab::addToResult(DC_BlockReport report)
 {
-    ulong num = ui->startLine->text().toULong() + 256;
-    ui->startLine->setText(QString::number(num));
+    QThread::usleep(10);
+    ui->startLine->setText(QString::number(report.lba));
     if (report.blk_status == 0) {
-        if (report.blk_access_time < 10 * 1000)
+        if (report.blk_access_time < 25000)
             _sectorsCounter.at(0)++;
-        else if (report.blk_access_time < 50 * 1000)
+        else if (report.blk_access_time < 100000)
             _sectorsCounter.at(1)++;
-        else if (report.blk_access_time < 150 * 1000)
+        else if (report.blk_access_time < 250000)
             _sectorsCounter.at(2)++;
-        else if (report.blk_access_time < 500 * 1000)
+        else if (report.blk_access_time < 1000000)
             _sectorsCounter.at(3)++;
-        else if (report.blk_access_time > 500 * 1000)
+        else if (report.blk_access_time > 3000000)
             _sectorsCounter.at(4)++;
     } else {
         _sectorsCounter.at(4 + report.blk_status)++;
@@ -150,7 +150,12 @@ void TestingTab::showResult()
         ui->t150label->setText(QString::number(_sectorsCounter.at(3)));
         ui->t500label->setText(QString::number(_sectorsCounter.at(4)));
         ui->t500olabel->setText(QString::number(_sectorsCounter.at(5)));
-        QThread::msleep(100);
+        ui->ltime->setText(QString::number(_sectorsCounter.at(6)));
+        ui->lunc->setText(QString::number(_sectorsCounter.at(7)));
+        ui->labrt->setText(QString::number(_sectorsCounter.at(8)));
+        ui->lindf->setText(QString::number(_sectorsCounter.at(9)));
+        ui->labrt->setText(QString::number(_sectorsCounter.at(10)));
+        QThread::msleep(200);
     }
 }
 
@@ -161,27 +166,37 @@ void TestingTab::stopShowResult()
 
 void TestingTab::addRect(DC_BlockReport report)
 {
+    QThread::usleep(10);
     if (report.blk_status == 0) {
-        if (report.blk_access_time < 10 * 1000)
-            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#C9C9CA")));
-        else if (report.blk_access_time < 50 * 1000)
-            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#AAAAAB")));
-        else if (report.blk_access_time < 150 * 1000)
-            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#808080")));
-        else if (report.blk_access_time < 500 * 1000)
-            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#05EF00")));
-        else if (report.blk_access_time > 500 * 1000)
-            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#FF8000")));
+        if (report.blk_access_time < 25000)
+            ui->graphicsView->scene()->addRect(_x, _y, 10, 15, QPen(Qt::black), QBrush(QColor("#C9C9CA")));
+        else if (report.blk_access_time < 100000)
+            ui->graphicsView->scene()->addRect(_x, _y, 10, 15, QPen(Qt::black), QBrush(QColor("#AAAAAB")));
+        else if (report.blk_access_time < 250000)
+            ui->graphicsView->scene()->addRect(_x, _y, 10, 15, QPen(Qt::black), QBrush(QColor("#808080")));
+        else if (report.blk_access_time < 1000000)
+            ui->graphicsView->scene()->addRect(_x, _y, 10, 15, QPen(Qt::black), QBrush(QColor("#05EF00")));
+        else if (report.blk_access_time > 3000000)
+            ui->graphicsView->scene()->addRect(_x, _y, 10, 15, QPen(Qt::black), QBrush(QColor("#FF8000")));
     } else {
-        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
+        ui->graphicsView->scene()->addRect(_x, _y, 10, 15, QPen(Qt::black), QBrush(QColor(Qt::blue)));
     }
 
-    _x += 20;
+    _x += 10;
+
+    if (_y > 10000) {
+        delete ui->graphicsView->scene();
+        ui->graphicsView->setScene(new QGraphicsScene(ui->graphicsView));
+        _y = 0;
+    }
+
     if (_y > 360)
         ui->graphicsView->verticalScrollBar()->setValue(_y);
+
     if (_x > 400) {
         _x = 0;
-        _y += 30;
+        _y += 15;
     }
+
 
 }

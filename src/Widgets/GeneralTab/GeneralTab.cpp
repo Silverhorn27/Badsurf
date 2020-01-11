@@ -99,7 +99,7 @@ void GeneralTab::on_pushButton_clicked()
     ui->tableWidget->setItem(3, 1,
                              new QTableWidgetItem(QString().setNum(capacity, 'f', 2) + QString(" GB")));
     ui->tableWidget->setItem(4, 1,
-                             new QTableWidgetItem(QString::number(_currentDev->capacity >> 5)));
+                             new QTableWidgetItem(QString::number(_currentDev->capacity / 512 - 1)));
     QString str;
     if (_currentDev->security_on)
         str = "Enabled";
