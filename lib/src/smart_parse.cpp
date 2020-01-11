@@ -69,6 +69,8 @@ smart_attr_t smart_attr_from_line(char *attr_line)
 
     /* set pointer to start of values and get them */
     while (!isdigit(*attr_line++));
+    attr_line--;
+
     sscanf(attr_line, "%d%3d%3d", &attr.value, &attr.worst, &attr.threshold);
 
     /* get fail value */
