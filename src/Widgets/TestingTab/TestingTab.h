@@ -35,10 +35,10 @@ private slots:
     void on_pauseButton_clicked();
 
 public slots:
-    void addToResult(DiskBlockAccess status);
+    void addToResult(DC_BlockReport report);
     void showResult();
     void stopShowResult();
-    void addRect(DiskBlockAccess status);
+    void addRect(DC_BlockReport report);
 
 signals:
     void on_stop();

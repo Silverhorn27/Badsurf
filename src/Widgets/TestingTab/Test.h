@@ -7,21 +7,6 @@
 #include "badsurflib/procedure.hpp"
 #include "badsurflib/device.hpp"
 
-enum DiskBlockAccess {
-    BLK_TL3 = 0,
-    BLK_TL10,
-    BLK_TL50,
-    BLK_TL150,
-    BLK_TL500,
-    BLK_TG500,
-
-    BLK_TIME,
-    BLK_UNC,
-    BLK_ABRT,
-    BLK_INDF,
-    BLK_AMNF,
-};
-
 class Test : public QObject
 {
     Q_OBJECT
@@ -30,13 +15,17 @@ private:
 
 public:
     Test(QObject *parent = nullptr);
-    void process(uint32_t start, uint32_t end);
+    void process(DC_Dev *dev, uint32_t start, uint32_t end);
+    static int statusCallback(DC_ProcedureCtx *ctx, void *callback_priv);
+    int callback(DC_ProcedureCtx *ctx);
+
+    int procedure_perform_loop(DC_ProcedureCtx *ctx);
 
 public slots:
     void stop();
 
 signals:
-    void read(DiskBlockAccess);
+    void read(DC_BlockReport);
     void finished();
 };
 

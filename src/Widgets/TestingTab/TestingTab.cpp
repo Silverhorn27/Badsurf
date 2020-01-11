@@ -74,7 +74,7 @@ void TestingTab::readSectors()
     _stopShow = false;
     _logger.log(Logger::INFO, "Start testing");
     QFuture<void> ftest = QtConcurrent::run(&this->_test, &Test::process,
-//                                            _currentDev,
+                                            _currentDev,
                                             ui->startLine->text().toULong(),
                                             ui->endLine->text().toULong());
     QFuture<void> fshow = QtConcurrent::run(this, &TestingTab::showResult);
@@ -121,11 +121,24 @@ void TestingTab::on_pauseButton_clicked()
     }
 }
 
-void TestingTab::addToResult(DiskBlockAccess status)
+void TestingTab::addToResult(DC_BlockReport report)
 {
-    ulong num = ui->startLine->text().toULong() + 255;
+    ulong num = ui->startLine->text().toULong() + 256;
     ui->startLine->setText(QString::number(num));
-    _sectorsCounter.at(status)++;
+    if (report.blk_status == 0) {
+        if (report.blk_access_time < 10 * 1000)
+            _sectorsCounter.at(0)++;
+        else if (report.blk_access_time < 50 * 1000)
+            _sectorsCounter.at(1)++;
+        else if (report.blk_access_time < 150 * 1000)
+            _sectorsCounter.at(2)++;
+        else if (report.blk_access_time < 500 * 1000)
+            _sectorsCounter.at(3)++;
+        else if (report.blk_access_time > 500 * 1000)
+            _sectorsCounter.at(4)++;
+    } else {
+        _sectorsCounter.at(4 + report.blk_status)++;
+    }
 }
 
 void TestingTab::showResult()
@@ -146,32 +159,23 @@ void TestingTab::stopShowResult()
     _stopShow = true;
 }
 
-void TestingTab::addRect(DiskBlockAccess status)
+void TestingTab::addRect(DC_BlockReport report)
 {
-    switch (status) {
-    case 0: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#C9C9CA")));
-    break;
-    case 1: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#AAAAAB")));
-    break;
-    case 2: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#808080")));
-    break;
-    case 3: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#05EF00")));
-    break;
-    case 4: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#FF8000")));
-    break;
-    case 5: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#F60909")));
-    break;
-    case 6: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
-    break;
-    case 7: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
-    break;
-    case 8: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
-    break;
-    case 9: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
-    break;
-    case 10: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
-    break;
+    if (report.blk_status == 0) {
+        if (report.blk_access_time < 10 * 1000)
+            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#C9C9CA")));
+        else if (report.blk_access_time < 50 * 1000)
+            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#AAAAAB")));
+        else if (report.blk_access_time < 150 * 1000)
+            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#808080")));
+        else if (report.blk_access_time < 500 * 1000)
+            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#05EF00")));
+        else if (report.blk_access_time > 500 * 1000)
+            ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#FF8000")));
+    } else {
+        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
     }
+
     _x += 20;
     if (_y > 360)
         ui->graphicsView->verticalScrollBar()->setValue(_y);
