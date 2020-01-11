@@ -148,10 +148,30 @@ void TestingTab::stopShowResult()
 
 void TestingTab::addRect(DiskBlockAccess status)
 {
-    if (status % 2 == 0) {
-        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#C9C9CA")));
-    } else
-        ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#AAAAAB")));
+    switch (status) {
+    case 0: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#C9C9CA")));
+    break;
+    case 1: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#AAAAAB")));
+    break;
+    case 2: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#808080")));
+    break;
+    case 3: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#05EF00")));
+    break;
+    case 4: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#FF8000")));
+    break;
+    case 5: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor("#F60909")));
+    break;
+    case 6: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
+    break;
+    case 7: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
+    break;
+    case 8: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
+    break;
+    case 9: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
+    break;
+    case 10: ui->graphicsView->scene()->addRect(_x, _y, 20, 30, QPen(Qt::black), QBrush(QColor(Qt::blue)));
+    break;
+    }
     _x += 20;
     if (_y > 360)
         ui->graphicsView->verticalScrollBar()->setValue(_y);

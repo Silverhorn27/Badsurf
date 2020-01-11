@@ -20,8 +20,6 @@ enum DiskBlockAccess {
     BLK_ABRT,
     BLK_INDF,
     BLK_AMNF,
-    BLK_T0NG,
-    BLK_BRK
 };
 
 class Test : public QObject
