@@ -1,0 +1,40 @@
+# Flags:
+~~~
+ 20 :: [-] not stated tasks
+  0 :: [*] for WIP tasks
+  0 :: [!] WIP tasks with that needs atantion
+  0 :: [+] task done
+  0 :: [x] task result causes build errors
+~~~
+
+-- Interfaces:
+[-] Device
+[-] ATA
+[-] SCSI
+[-] Device Finder
+
+-- Classes:
+[-] Disk
+
+-- Program operations
+[-] Read test
+[-] SMART
+[-] Erase
+[-] Set security
+[-] Service mode
+
+-- Utils
+[-] Rust (Linux kernel) integer types
+[-] String utils for parsing
+[-] Advanced logger
+[-] Timer
+[-] Error handling
+[-] Basic POSIX wrapper
+[-] Thread utils
+
+-- Misc:
+[-] SCSI Commands
+[-] ATA Commands
+
+-- Migration to CXX
+[-] Test framework

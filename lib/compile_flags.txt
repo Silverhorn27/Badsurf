@@ -1,2 +1,0 @@
-g++ -Wall -Wextra -Wpedantic -Werror -std=c++2a
--I./include

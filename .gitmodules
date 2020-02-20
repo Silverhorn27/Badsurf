@@ -1,0 +1,3 @@
+[submodule "libbadsurf/udev"]
+	path = libbadsurf/udev
+	url = https://github.com/dimitry-ishenko/udev.git
